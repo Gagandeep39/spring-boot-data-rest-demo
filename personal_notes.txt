@@ -1,0 +1,53 @@
+Spring data rest
+-> Only needs interface extending JPARepository<Entity, Integer>, Entity class i.e User or Employee and dependency spring rest repositories
+->Siupports pagination, sorting, searcing
+->Exeding and adding custom queries using JPQL
+->Supports Doain Specific language(SQL, Oacle etc)
+->Spring Data rest endpoints are HATEOAS complaint
+->Hypermedia as the Engine of pplication State
+->Hypermedia driven sites provide information to access REST interfaces (meta data of rest)
+->Data response uses HATEOS i.e. It sends actual data followed by meta data to the link
+-> for more info
+https://spring.io/projects/spring-hateoas
+->Also uses HAL (hypertxt application lanuage) data format
+Basically a standard convection/rule
+{
+  "_links": {
+    "self": {
+      "href": "http://example.com/api/book/hal-cookbook"
+    }
+  },
+  "id": "hal-cookbook",
+  "name": "HAL Cookbook"
+}
+
+Spring data rest properties
+-> API URL to base path
+spring.data.rest.base-path=/i-luv-you
+-> We will still have to append 'employees' after this
+
+Rest Endpoints:
+-> By default, endpoints are create based on entity type, basically its plural form
+eg. Employee-> employees, Book-> books (simply append an 's')
+-> To manually change it, add the annotation of repository class
+@RepositoryRestResource(path="darkness")
+
+
+Pagination
+-> Returns first 20 elements from database by default
+-> We can navigae to pages using
+http://localhost:8080/employees?page={pageno}
+-> Changeble properties
+spring.data.rest.base-path -> Base path of repository
+spring.data.rest.default-page-size -> Default size of page (no. of elements in a page eg. 10 for 10 employees)
+spring.data.rest.max-page-size -> MAximum size of page
+-> For more properties
+https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-application-properties.html#common-application-properties
+
+Sorting
+-> Sort by element
+employees?sort=lastName
+-> Sort in descendingorder
+employees?sort=firstName,desc
+-> Multiple sort
+employees?sort=lastName,firstName,asc
